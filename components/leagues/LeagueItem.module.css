@@ -1,0 +1,64 @@
+.leagueItem {
+    width: calc(33.33% - 1rem);
+    margin: 0.5rem;
+    list-style: none;
+    text-decoration: none;
+  }
+  
+  .leagueItemLink {
+    display: block;
+    text-decoration: none;
+  }
+  
+  .leagueItemContent {
+    padding: 0.5rem;
+    background-color: #f2f2f2;
+    border-radius: 6px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+  }
+  
+  .leagueItemContent:hover {
+    background-color: #e4e4e4;
+  }
+  
+  .leagueItemImage {
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .leagueItemImageImg {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+  }
+  
+  .leagueItemInfo {
+    text-align: center;
+    padding: 0.5rem 0;
+  }
+  
+  .leagueItemTitle {
+    font-size: 1rem;
+    margin: 0;
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .leagueItemName {
+    font-size: 0.8rem;
+    margin: 0;
+    color: #777;
+  }
+  
