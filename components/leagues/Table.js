@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect, Fragment } from 'react';
+import Link from 'next/link';
+import Clubs from '@/pages/team/[club]';
 import styles from './Table.module.css';
 
 const Table = props => {
@@ -6,7 +8,7 @@ const Table = props => {
 
   const [table, setTable] = useState([]);
 
-  const { name, title, code } = props;
+  const { name, title, code, clubs } = props;
 
   let formattedName, formattedTitle, formattedCode;
 
@@ -78,6 +80,11 @@ const Table = props => {
     }
   };
 
+  const formatTeamName = teamName => {
+   return teamName.toLowerCase().replace(/\s+/g, '-');
+  };
+
+
   const formatMatchDate = utcDate => {
     const date = new Date(utcDate);
     const day = String(date.getDate()).padStart(2, '0');
@@ -139,10 +146,10 @@ const Table = props => {
                       className={styles.teamContainer}
                       onMouseEnter={() => onMouseTeamEnterHandler(match.homeTeam)}
                       onMouseLeave={onMouseTeamLeaveHandler}
-                      onClick={e => teamNameClickHandler(match.homeTeam.shortName, e)}
+                      // onClick={e => teamNameClickHandler(match.homeTeam.shortName, e)}
                     >
                       <img src={match.homeTeam.crest} alt={match.homeTeam.crest} className={styles.teamContainerImg} />
-                      <span className={styles.teamName}>{match.homeTeam.shortName}</span>
+                      <Link className={styles.teamName} href={`/team/${formatTeamName(match.homeTeam.shortName)}`}>{match.homeTeam.shortName}</Link>
                       {hoveredTeam === match.homeTeam ? (
                         <span className={styles.tooltip}>Click for team details!</span>
                       ) : (
@@ -155,10 +162,10 @@ const Table = props => {
                       className={styles.teamContainer}
                       onMouseEnter={() => onMouseTeamEnterHandler(match.awayTeam)}
                       onMouseLeave={onMouseTeamLeaveHandler}
-                      onClick={e => teamNameClickHandler(match.awayTeam.shortName, e)}
+                      // onClick={e => teamNameClickHandler(match.awayTeam.shortName, e)}
                     >
                       <img src={match.awayTeam.crest} alt={match.awayTeam.crest} className={styles.teamContainerImg} />
-                      <span className={styles.teamName}>{match.awayTeam.shortName}</span>
+                      <Link className={styles.teamName}  href={`/team/${formatTeamName(match.awayTeam.shortName)}`}>{match.awayTeam.shortName}</Link>
                       {hoveredTeam === match.awayTeam && (
                         <span className={styles.tooltip}>Click for team details!</span>
                       )}
