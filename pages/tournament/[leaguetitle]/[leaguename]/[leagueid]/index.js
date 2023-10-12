@@ -1,27 +1,68 @@
 //localhost:3000/tournament
 
-import React, { Fragment, useState, useRef } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Table from '@/components/leagues/Table';
 import LeagueTable from '@/components/leagues/LeagueTable';
-import { leagues } from '@/pages';
-import { clubs } from '@/pages';
 import { useRouter } from 'next/router';
 import classes from './Tournament.module.css';
 
 const Tournament = () => {
   const [activeTable, setActiveTable] = useState('table');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+  const [league, setLeague] = useState();
+  const [clubs, setClubs] = useState();
 
   const router = useRouter();
-  const { leaguetitle, leaguename, leagueid } = router.query;
+  const { leaguetitle, leagueid } = router.query;
 
-  const league = leagues.find(league => league.name === leaguename);
+  const formatName = cname => {
+    const words = cname.split('-');
+    const capitalizedWords = words.map(word => {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    });
+    return capitalizedWords.join(' ');
+  };
 
-  let leagueClubs;
+  useEffect(() => {
+    const fetchLeague = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch(`http://localhost:5000/league/${leagueid}`);
+        if (!response.ok) {
+          throw new Error('API request failed');
+        }
+        const data = await response.json();
+        console.log("data " + data);
+        setLeague(data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+      setIsLoading(false);
+    };
+    fetchLeague();
+  }, []);
 
-  if(league) {
-    leagueClubs = clubs.find(club => club.area.id === league.area.id);
-  }
+  useEffect(() => {
+    const fetchClubs = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch(`http://localhost:5000/${leagueid}/clubs`);
+        if (!response.ok) {
+          throw new Error('API request failed');
+        }
+        const data = await response.json();
+        setClubs(data.teams);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+      setIsLoading(false);
+    };
+    fetchClubs();
+  }, []);
 
   const handleFixturesClick = () => {
     setActiveTable('table');
@@ -31,13 +72,14 @@ const Tournament = () => {
     setActiveTable('leagueTable');
   };
 
-  if(!league) {
-    return <h1>Pogresan naziv lige</h1>
-  }
+ if(!league) {
+  return <h1>Emin</h1>
+ }
+ 
   return (
     <Fragment>
       <div className={classes.leagueTitle}>
-        <h2>Welcome to {leaguetitle}!</h2>
+        <h2>Welcome to {formatName(leaguetitle)}!</h2>
         <div className={classes.leagueContainer}>
           <div className={classes.buttonContainer}>
             <button onClick={handleFixturesClick} className={activeTable === 'table' ? classes.active : ''}>
@@ -54,7 +96,7 @@ const Tournament = () => {
               name={league.name}
               title={league.area.name}
               code={league.code}
-              clubs={leagueClubs}
+              clubs={clubs}
               image={league.area.flag}
             />
           ) : (
@@ -62,7 +104,7 @@ const Tournament = () => {
               key={league.area.id}
               id={league.area.id}
               league={league}
-              teams={leagueClubs}
+              teams={clubs}
               image={league.area.flag}
             />
           )}
