@@ -1,0 +1,133 @@
+.leagueTable {
+  border: 1px solid #ccc;
+  background-color: #f0f8ff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  width: 60rem;
+  padding: 10px;
+}
+
+.leagueTable h2.title {
+  background-color: #84a7b0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.th,
+.td {
+  padding: 8px;
+  text-align: center;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.table tr:hover {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+
+td.dateTimeCell,
+.results {
+  width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+td.leagueTeamCell {
+  width: auto;
+}
+
+td.leagueTeamCell:hover {
+  cursor: pointer;
+}
+
+.leagueTeamName {
+  color: black;
+}
+
+.leagueTeamName:hover {
+  text-decoration: none;
+}
+
+table tr.selected {
+  font-weight: bold;
+}
+
+td.leagueTeamCell.selected {
+  font-weight: bold;
+}
+
+.titleLink {
+  text-decoration: none;
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 1;
+  background-color: #333;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 12px;
+  left: auto;
+  right: 20px;
+  top: -10px;
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #333 transparent;
+}
+
+.leagueTeamContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.leagueTeamContainer img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.position {
+  background-color: #84a7b0;
+  font-weight: bold;
+  color: black;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 30px;
+}
+
+.leagueTable h2.title img {
+  margin-left: 10px;
+  width: 15px;
+  height: 15px;
+}

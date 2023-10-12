@@ -12,8 +12,8 @@ const LeaguesTables = props => {
     setError(null);
   };
 
-  if (!props.leagues) {
-    return <p>No tables available.</p>;
+  if (!leagues || !clubs)   {
+    return <h1 className={classes.heading}>No tables available.</h1>;
   }
 
   return (

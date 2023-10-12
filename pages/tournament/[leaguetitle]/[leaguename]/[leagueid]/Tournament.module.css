@@ -1,0 +1,50 @@
+.leagueTitle {
+  text-align: center;
+  margin-top: 30px;
+  font-size: large;
+}
+
+.leagueContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.buttonContainer button {
+  width: 5rem;
+  height: 2rem;
+  border-radius: 10px;
+  background-color: #c4d4e8;
+  border: none;
+  margin: none;
+}
+
+.buttonContainer button:hover {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+
+.buttonContainer button:not(.active):hover {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+
+.buttonContainer button.active {
+  background-color: #f0f8ff;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: none;
+}

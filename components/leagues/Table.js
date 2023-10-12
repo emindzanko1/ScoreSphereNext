@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect, Fragment } from 'react';
 import styles from './Table.module.css';
 
 const Table = props => {
@@ -6,7 +6,7 @@ const Table = props => {
 
   const [table, setTable] = useState([]);
 
-  const { name, title, code, clubs } = props;
+  const { name, title, code } = props;
 
   let formattedName, formattedTitle, formattedCode;
 
@@ -16,7 +16,27 @@ const Table = props => {
     formattedCode = code.toLowerCase().replace(/\s+/g, '-');
   }
 
+  useEffect(() => {
+    const fetchTable = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch(`http://localhost:5000/league/${formattedCode}/matches`);
+        // const response = await fetch('http://localhost:5000/league/PL/matches');
+        if (!response.ok) {
+          throw new Error('API request failed');
+        }
+        const data = await response.json();
+        setTable(data.matches);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchTable();
+  }, []);
+
   const [selectedMatch, setSelectedMatch] = useState(null);
+  const [hoveredRow, setHoveredRow] = useState(null);
 
   const rowTimeoutRef = useRef(null);
   const teamTimeoutRef = useRef(null);
@@ -72,7 +92,7 @@ const Table = props => {
       const startTime = new Date(match.utcDate);
       const currentTime = new Date();
       const timeDifference = currentTime - startTime;
-      const elapsedMinutes = Math.floor(timeDifference / 60000); // 60000 milliseconds in a minute
+      const elapsedMinutes = Math.floor(timeDifference / 60000);
       return `${elapsedMinutes > 90 ? '90+' : elapsedMinutes}'`;
     } else if (match.status === 'FINISHED') {
       return 'Finished';
@@ -87,65 +107,72 @@ const Table = props => {
   };
 
   return (
-    <div key={props.id} className={styles.table}>
-      <h2 className={styles.title}>
-        {title}
-        <img src={props.image} alt={props.image} className={styles.titleImg} />
-      </h2>
-      <table className={styles.tbl}>
-        <thead>
-          <tr>
-            <th>Date & Time</th>
-            <th>Home Team</th>
-            <th>Away Team</th>
-            <th>Result</th>
-          </tr>
-        </thead>
-        <tbody>
-          {table.map((match, index) => (
-            <tr
-              key={match.id}
-              ref={rowRef}
-              onClick={() => rowClickHandler(match)}
-              className={`${styles.clickableRow} ${hoveredRow === index ? styles.hovered : ''}`}
-              onMouseEnter={() => onMouseRowEnterHandler(index)}
-              onMouseLeave={onMouseRowLeaveHandler}
-            >
-              <td className={styles.dateTimeCell}>{formatMatchTime(match)}</td>
-              <td className={styles.teamCell}>
-                <div
-                  className={styles.teamContainer}
-                  onMouseEnter={() => onMouseTeamEnterHandler(match.homeTeam)}
-                  onMouseLeave={onMouseTeamLeaveHandler}
-                  onClick={e => teamNameClickHandler(match.homeTeam.shortName, e)}
-                >
-                  <img src={match.homeTeam.crest} alt={match.homeTeam.crest} className={styles.teamContainerImg} />
-                  <span className={styles.teamName}>{match.homeTeam.shortName}</span>
-                  {hoveredTeam === match.homeTeam ? (
-                    <span className={styles.tooltip}>Click for team details!</span>
-                  ) : (
-                    hoveredRow === index && <span className={styles.tooltip}>Click for match details!</span>
-                  )}
-                </div>
-              </td>
-              <td className={styles.teamCell}>
-                <div
-                  className={styles.teamContainer}
-                  onMouseEnter={() => onMouseTeamEnterHandler(match.awayTeam)}
-                  onMouseLeave={onMouseTeamLeaveHandler}
-                  onClick={e => teamNameClickHandler(match.awayTeam.shortName, e)}
-                >
-                  <img src={match.awayTeam.crest} alt={match.awayTeam.crest} className={styles.teamContainerImg} />
-                  <span className={styles.teamName}>{match.awayTeam.shortName}</span>
-                  {hoveredTeam === match.awayTeam && <span className={styles.tooltip}>Click for team details!</span>}
-                </div>
-              </td>
-              <td className={styles.results}>0:0</td>
+    <Fragment>
+      <div key={props.id} className={styles.table}>
+        <h2 className={styles.title}>
+          {title}
+          <img src={props.image} alt={props.image} className={styles.titleImg} />
+        </h2>
+        <table className={styles.tbl}>
+          <thead>
+            <tr>
+              <th>Date & Time</th>
+              <th>Home Team</th>
+              <th>Away Team</th>
+              <th>Result</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {table &&
+              table.map((match, index) => (
+                <tr
+                  key={match.id}
+                  ref={rowRef}
+                  onClick={() => rowClickHandler(match)}
+                  className={`${styles.clickableRow} ${hoveredRow === index ? styles.hovered : ''}`}
+                  onMouseEnter={() => onMouseRowEnterHandler(index)}
+                  onMouseLeave={onMouseRowLeaveHandler}
+                >
+                  <td className={styles.dateTimeCell}>{formatMatchTime(match)}</td>
+                  <td className={styles.teamCell}>
+                    <div
+                      className={styles.teamContainer}
+                      onMouseEnter={() => onMouseTeamEnterHandler(match.homeTeam)}
+                      onMouseLeave={onMouseTeamLeaveHandler}
+                      onClick={e => teamNameClickHandler(match.homeTeam.shortName, e)}
+                    >
+                      <img src={match.homeTeam.crest} alt={match.homeTeam.crest} className={styles.teamContainerImg} />
+                      <span className={styles.teamName}>{match.homeTeam.shortName}</span>
+                      {hoveredTeam === match.homeTeam ? (
+                        <span className={styles.tooltip}>Click for team details!</span>
+                      ) : (
+                        hoveredRow === index && <span className={styles.tooltip}>Click for match details!</span>
+                      )}
+                    </div>
+                  </td>
+                  <td className={styles.teamCell}>
+                    <div
+                      className={styles.teamContainer}
+                      onMouseEnter={() => onMouseTeamEnterHandler(match.awayTeam)}
+                      onMouseLeave={onMouseTeamLeaveHandler}
+                      onClick={e => teamNameClickHandler(match.awayTeam.shortName, e)}
+                    >
+                      <img src={match.awayTeam.crest} alt={match.awayTeam.crest} className={styles.teamContainerImg} />
+                      <span className={styles.teamName}>{match.awayTeam.shortName}</span>
+                      {hoveredTeam === match.awayTeam && (
+                        <span className={styles.tooltip}>Click for team details!</span>
+                      )}
+                    </div>
+                  </td>
+                  <td className={styles.results}>{`${match.score.fullTime.home ?? '-'}:${
+                    match.score.fullTime.away ?? '-'
+                  }`}</td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
+    </Fragment>
   );
 };
 

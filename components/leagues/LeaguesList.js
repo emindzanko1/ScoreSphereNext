@@ -7,7 +7,7 @@ const LeaguesList = props => {
   const leagues = props.leagues;
 
   if (!leagues || leagues.length === 0) {
-    return <p>No leagues available.</p>;
+    return <h1 className={classes.heading}>No leagues available.</h1>;
   }
 
   return (
