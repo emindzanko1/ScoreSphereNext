@@ -13,13 +13,15 @@ const ClubDetails = props => {
   let name, league;
 
   if (club) {
-    league = club.runningCompetitions[0];
-    name = club.runningCompetitions[0].name;
+    club.area.name === 'Germany' ? (league = club.runningCompetitions[1]) : (league = club.runningCompetitions[0]);
+    club.area.name === 'Germany'
+      ? (name = club.runningCompetitions[1].name)
+      : (name = club.runningCompetitions[0].name);
   }
 
   const handleFixturesClick = () => {
     setActiveTable('table');
-    setSelectedClub(null);
+    // setSelectedClub(null);
   };
 
   const handleTableClick = () => {
@@ -51,6 +53,7 @@ const ClubDetails = props => {
               name={league.name}
               title={club.area.name}
               code={league.code}
+              selectedClub={selectedClub}
               image={club.area.flag}
             />
           ) : (

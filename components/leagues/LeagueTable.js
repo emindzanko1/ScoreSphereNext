@@ -90,7 +90,9 @@ const LeagueTable = props => {
                   <span className={classes.position}> {entry.position}</span>
                 </td>
                 <td
-                  className={`league-team-cell ${selectedClub && entry.team.id === selectedClub.id ? 'selected' : ''}`}
+                  className={`${classes.leagueTeamCell} ${
+                    selectedClub && entry.team.id === selectedClub.id ? classes.selected : ''
+                  }`}
                 >
                   <div className={classes.leagueTeamContainer}>
                     <img src={entry.team.crest} alt={entry.team.crest} />

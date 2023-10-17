@@ -8,7 +8,7 @@ const Table = props => {
 
   const [table, setTable] = useState([]);
 
-  const { name, title, code } = props;
+  const { name, title, code, selectedClub } = props;
 
   let formattedName, formattedTitle, formattedCode;
 
@@ -81,9 +81,10 @@ const Table = props => {
   };
 
   const formatTeamName = teamName => {
-   return teamName.toLowerCase().replace(/\s+/g, '-');
+    return teamName.toLowerCase().replace(/\s+/g, '-');
   };
 
+  const isClubSelected = club => selectedClub && club.id === selectedClub.id;
 
   const formatMatchDate = utcDate => {
     const date = new Date(utcDate);
@@ -136,7 +137,9 @@ const Table = props => {
                   key={match.id}
                   ref={rowRef}
                   onClick={() => rowClickHandler(match)}
-                  className={`${styles.clickableRow} ${hoveredRow === index ? styles.hovered : ''}`}
+                  className={`${styles.clickableRow} ${hoveredRow === index ? styles.hovered : ''} ${
+                    isClubSelected(match.homeTeam) || isClubSelected(match.awayTeam) ? styles.selected : ''
+                  }`}
                   onMouseEnter={() => onMouseRowEnterHandler(index)}
                   onMouseLeave={onMouseRowLeaveHandler}
                 >
@@ -146,10 +149,14 @@ const Table = props => {
                       className={styles.teamContainer}
                       onMouseEnter={() => onMouseTeamEnterHandler(match.homeTeam)}
                       onMouseLeave={onMouseTeamLeaveHandler}
-                      // onClick={e => teamNameClickHandler(match.homeTeam.shortName, e)}
                     >
                       <img src={match.homeTeam.crest} alt={match.homeTeam.crest} className={styles.teamContainerImg} />
-                      <Link className={styles.teamName} href={`/team/${formatTeamName(match.homeTeam.shortName)}/${formatTeamName(code)}`}>{match.homeTeam.shortName}</Link>
+                      <Link
+                        className={styles.teamName}
+                        href={`/team/${formatTeamName(match.homeTeam.shortName)}/${formatTeamName(code)}`}
+                      >
+                        {match.homeTeam.shortName}
+                      </Link>
                       {hoveredTeam === match.homeTeam ? (
                         <span className={styles.tooltip}>Click for team details!</span>
                       ) : (
@@ -162,10 +169,14 @@ const Table = props => {
                       className={styles.teamContainer}
                       onMouseEnter={() => onMouseTeamEnterHandler(match.awayTeam)}
                       onMouseLeave={onMouseTeamLeaveHandler}
-                      // onClick={e => teamNameClickHandler(match.awayTeam.shortName, e)}
                     >
                       <img src={match.awayTeam.crest} alt={match.awayTeam.crest} className={styles.teamContainerImg} />
-                      <Link className={styles.teamName}  href={`/team/${formatTeamName(match.awayTeam.shortName)}/${formatTeamName(code)}`}>{match.awayTeam.shortName}</Link>
+                      <Link
+                        className={styles.teamName}
+                        href={`/team/${formatTeamName(match.awayTeam.shortName)}/${formatTeamName(code)}`}
+                      >
+                        {match.awayTeam.shortName}
+                      </Link>
                       {hoveredTeam === match.awayTeam && (
                         <span className={styles.tooltip}>Click for team details!</span>
                       )}

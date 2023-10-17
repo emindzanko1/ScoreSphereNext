@@ -1,124 +1,127 @@
 .table {
-    border: 1px solid #ccc;
-    background-color: #f0f8ff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin: 10px;
-    width: 60rem;
-    padding: 10px;
-  }
-  
-  .title {
-    background-color: #84a7b0;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    color: black;
-    font-size: 18px;
-    font-weight: bold;
-    margin: 0;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  .titleImg {
-    margin-left: 10px;
-    width: 15px;
-    height: 15px;
-  }
-  
-  .tbl {
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  .tbl th,
-  .tbl td {
-    border-bottom: none;
-    padding: 8px;
-    text-align: center;
-    transition: background-color 0.2s ease-in-out;
-  }
-  
-  .tbl th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-  }
-  
-  .tbl tr {
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .tbl tr.clickableRow:hover {
-    background-color: #f2f2f2;
-    cursor: pointer;
-  }
-  
-  .dateTimeCell,
-  .results {
-    width: 100px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  .teamCell {
-    width: 200px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: center;
-    padding-left: 100px;
-  }
-  
-  .teamCell:hover {
-    cursor: pointer;
-  }
-  
-  .teamName {
-    color: black;
-  }
-  
-  .teamName:hover {
-    text-decoration: underline;
-  }
-  
-  .titleLink {
-    text-decoration: none;
-  }
-  
-  .tooltip {
-    position: absolute;
-    z-index: 1;
-    background-color: #333;
-    color: #fff;
-    padding: 5px;
-    border-radius: 5px;
-    font-size: 12px;
-    left: auto;
-    right: 20px;
-    top: -10px;
-  }
-  
-  .tooltip::after {
-    content: '';
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent #333 transparent;
-  }
-  
-  .teamContainer {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-  
-  .teamContainerImg {
-    width: 17px;
-    height: 17px;
-    margin-right: 10px;
-  }
-  
+  border: 1px solid #ccc;
+  background-color: #f0f8ff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  width: 60rem;
+  padding: 10px;
+}
+
+.title {
+  background-color: #84a7b0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+}
+
+.titleImg {
+  margin-left: 10px;
+  width: 15px;
+  height: 15px;
+}
+
+.tbl {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.tbl th,
+.tbl td {
+  border-bottom: none;
+  padding: 8px;
+  text-align: center;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.tbl th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.tbl tr {
+  border-bottom: 1px solid #ccc;
+}
+
+.tbl tr.clickableRow:hover {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+
+.dateTimeCell,
+.results {
+  width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.teamCell {
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  padding-left: 100px;
+}
+
+.teamCell:hover {
+  cursor: pointer;
+}
+
+.teamName {
+  color: black;
+}
+
+.teamName:hover {
+  text-decoration: underline;
+}
+
+.titleLink {
+  text-decoration: none;
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 1;
+  background-color: #333;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 12px;
+  left: auto;
+  right: 20px;
+  top: -10px;
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #333 transparent;
+}
+
+.teamContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.teamContainerImg {
+  width: 17px;
+  height: 17px;
+  margin-right: 10px;
+}
+
+.selected {
+  font-weight: bold;
+}
