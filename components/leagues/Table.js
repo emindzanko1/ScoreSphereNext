@@ -8,7 +8,7 @@ const Table = props => {
 
   const [table, setTable] = useState([]);
 
-  const { name, title, code, clubs } = props;
+  const { name, title, code } = props;
 
   let formattedName, formattedTitle, formattedCode;
 

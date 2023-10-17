@@ -7,7 +7,6 @@ const HomePage = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [leagues, setLeagues] = useState([]);
-  const [clubs, setClubs] = useState([]);
   
   useEffect(() => {
     const fetchLeagues = async () => {
@@ -46,42 +45,10 @@ const HomePage = () => {
     );
   }
 
-  useEffect(() => {
-    const fetchClubs = async () => {
-      try {
-        setIsLoading(true);
-
-        const responsePL = await fetch('http://localhost:5000/PL/clubs');
-        const responseBL1 = await fetch('http://localhost:5000/BL1/clubs');
-        const responseSA = await fetch('http://localhost:5000/SA/clubs');
-        const responsePD = await fetch('http://localhost:5000/PD/clubs');
-
-        if (!responsePL.ok || !responseBL1.ok || !responseSA.ok || !responsePD.ok) {
-          throw new Error('API request failed');
-        }
-  
-        const dataPL = await responsePL.json();
-        const dataBL1 = await responseBL1.json();
-        const dataSA = await responseSA.json();
-        const dataPD = await responsePD.json();
-
-        const combinedClubs = [...dataPL.teams, ...dataBL1.teams, ...dataSA.teams, ...dataPD.teams ];
-
-        setClubs(combinedClubs);
-        setIsLoading(false);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-      setIsLoading(false);
-    };
-    fetchClubs();
-  }, []);
-
-
   return (
     <Fragment>
       <LeaguesList leagues={filteredLeagues} />
-      <LeaguesTables leagues={filteredLeagues} clubs={clubs} />
+      <LeaguesTables leagues={filteredLeagues} />
     </Fragment>
   );
 };

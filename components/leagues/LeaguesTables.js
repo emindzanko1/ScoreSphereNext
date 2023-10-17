@@ -6,20 +6,18 @@ const LeaguesTables = props => {
 //   const [error, setError] = useState();
 
   const leagues = props.leagues;
-  const clubs = props.clubs;
 
   const errorHandler = () => {
     setError(null);
   };
 
-  if (!leagues || !clubs)   {
+  if (!leagues)   {
     return <h1 className={classes.heading}>No tables available.</h1>;
   }
 
   return (
     <ul className={classes.leaguesContainer}>
       {leagues.map(league => {
-        const leagueClubs = clubs.filter(club => club.area.id === league.area.id);
         return (
           <Table
             key={league.id}
@@ -27,7 +25,6 @@ const LeaguesTables = props => {
             name={league.name}
             title={league.area.name}
             code={league.code}
-            clubs={leagueClubs}
             image={league.area.flag}
           />
         );
