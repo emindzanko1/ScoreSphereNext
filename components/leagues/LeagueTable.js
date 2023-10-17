@@ -5,18 +5,14 @@ import Link from 'next/link';
 import classes from './LeagueTable.module.css';
 
 const LeagueTable = props => {
-  const { league, teams, selectedClub, image, code } = props;
+  const { name, title, code, selectedClub, image } = props;
   const [isLoading, setIsLoading] = useState(false);
   const [hoveredRow, setHoveredRow] = useState(null);
   const [table, setTable] = useState([]);
 
-  let formattedName, formattedTitle, formattedCode;
-
-  if (league) {
-    formattedName = league.name.toLowerCase().replace(/\s+/g, '-');
-    formattedTitle = league.area.name.toLowerCase().replace(/\s+/g, '-');
-    formattedCode = league.code.toLowerCase().replace(/\s+/g, '-');
-  }
+  const formattedName = name.toLowerCase().replace(/\s+/g, '-');
+  const formattedTitle = title.toLowerCase().replace(/\s+/g, '-');
+  const formattedCode = code.toLowerCase().replace(/\s+/g, '-');
 
   useEffect(() => {
     const fetchTable = async () => {
@@ -65,7 +61,7 @@ const LeagueTable = props => {
           style={{ textDecoration: 'none' }}
         >
           <h2 className={classes.title}>
-            {league.area.name}
+            {title}
             <img src={image} alt={image} />
           </h2>
         </Link>

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, Fragment } from 'react';
 import Link from 'next/link';
-import Clubs from '@/pages/team/[club]';
+import Clubs from '@/pages/team/[club]/[code]';
 import styles from './Table.module.css';
 
 const Table = props => {
@@ -149,7 +149,7 @@ const Table = props => {
                       // onClick={e => teamNameClickHandler(match.homeTeam.shortName, e)}
                     >
                       <img src={match.homeTeam.crest} alt={match.homeTeam.crest} className={styles.teamContainerImg} />
-                      <Link className={styles.teamName} href={`/team/${formatTeamName(match.homeTeam.shortName)}`}>{match.homeTeam.shortName}</Link>
+                      <Link className={styles.teamName} href={`/team/${formatTeamName(match.homeTeam.shortName)}/${formatTeamName(code)}`}>{match.homeTeam.shortName}</Link>
                       {hoveredTeam === match.homeTeam ? (
                         <span className={styles.tooltip}>Click for team details!</span>
                       ) : (
@@ -165,7 +165,7 @@ const Table = props => {
                       // onClick={e => teamNameClickHandler(match.awayTeam.shortName, e)}
                     >
                       <img src={match.awayTeam.crest} alt={match.awayTeam.crest} className={styles.teamContainerImg} />
-                      <Link className={styles.teamName}  href={`/team/${formatTeamName(match.awayTeam.shortName)}`}>{match.awayTeam.shortName}</Link>
+                      <Link className={styles.teamName}  href={`/team/${formatTeamName(match.awayTeam.shortName)}/${formatTeamName(code)}`}>{match.awayTeam.shortName}</Link>
                       {hoveredTeam === match.awayTeam && (
                         <span className={styles.tooltip}>Click for team details!</span>
                       )}

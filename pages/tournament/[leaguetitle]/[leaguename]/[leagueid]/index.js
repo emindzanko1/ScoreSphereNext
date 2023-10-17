@@ -45,25 +45,6 @@ const Tournament = () => {
     fetchLeague();
   }, []);
 
-  useEffect(() => {
-    const fetchClubs = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch(`http://localhost:5000/${leagueid}/clubs`);
-        if (!response.ok) {
-          throw new Error('API request failed');
-        }
-        const data = await response.json();
-        setClubs(data.teams);
-        setIsLoading(false);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-      setIsLoading(false);
-    };
-    fetchClubs();
-  }, []);
-
   const handleFixturesClick = () => {
     setActiveTable('table');
   };
@@ -96,15 +77,15 @@ const Tournament = () => {
               name={league.name}
               title={league.area.name}
               code={league.code}
-              clubs={clubs}
               image={league.area.flag}
             />
           ) : (
             <LeagueTable
-              key={league.area.id}
-              id={league.area.id}
-              league={league}
-              teams={clubs}
+              key={league.id}
+              id={league.id}
+              name={league.name}
+              title={league.area.name}
+              code={league.code}
               image={league.area.flag}
             />
           )}
