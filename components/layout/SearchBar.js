@@ -1,9 +1,12 @@
 import { Fragment, useState, useEffect } from 'react';
+import Link from 'next/link';
 import classes from './SearchBar.module.css';
 
 const SearchBar = props => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchText, setSearchText] = useState('');
+  const [leagues, setLeagues] = useState([]);
+  const [clubs, setClubs] = useState([]);
 
   const handleSearchInputChange = event => {
     const searchText = event.target.value;
@@ -13,8 +16,6 @@ const SearchBar = props => {
   const handleClearSearch = () => {
     setSearchText('');
   };
-
-  const [leagues, setLeagues] = useState([]);
 
   useEffect(() => {
     const fetchLeagues = async () => {
@@ -53,21 +54,71 @@ const SearchBar = props => {
     );
   }
 
-  if (filteredLeagues) {
-    console.log(filteredLeagues);
-  }
+  useEffect(() => {
+    const fetchClubs = async () => {
+      try {
+        setIsLoading(true);
+
+        const responsePL = await fetch('http://localhost:5000/PL/clubs');
+        const responseBL1 = await fetch('http://localhost:5000/BL1/clubs');
+        const responseSA = await fetch('http://localhost:5000/SA/clubs');
+        const responsePD = await fetch('http://localhost:5000/PD/clubs');
+
+        if (!responsePL.ok || !responseBL1.ok || !responseSA.ok || !responsePD.ok) {
+          throw new Error('API request failed');
+        }
+
+        const dataPL = await responsePL.json();
+        const dataBL1 = await responseBL1.json();
+        const dataSA = await responseSA.json();
+        const dataPD = await responsePD.json();
+
+        const combinedClubs = [...dataPL.teams, ...dataBL1.teams, ...dataSA.teams, ...dataPD.teams];
+
+        setClubs(combinedClubs);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+      setIsLoading(false);
+    };
+    fetchClubs();
+  }, []);
+
+  const formatTeamName = teamName => {
+    return teamName.toLowerCase().replace(/\s+/g, '-');
+  };
 
   return (
     <form className={classes.searchForm}>
       <input type='text' value={searchText} onChange={handleSearchInputChange} />
       <div className={classes.suggestionsList}>
-        {filteredLeagues ? (
-          filteredLeagues.map(league => (
-            <div className={classes.list} key={league.id}>
-              <img src={league.emblem} alt={league.name} />
-              {league.name}
-            </div>
-          ))
+        {filteredLeagues || clubs ? (
+          <>
+            {filteredLeagues &&
+              filteredLeagues.map(league => (
+                <Link
+                  className={classes.list}
+                  key={league.id}
+                  href={`/tournament/${formatTeamName(league.area.name)}/${formatTeamName(league.name)}/${formatTeamName(league.code)}`}
+                >
+                  <img src={league.emblem} alt={league.name} />
+                  {league.name}
+                </Link>
+              ))}
+
+            {clubs &&
+              clubs.map(club => (
+                <Link
+                  className={classes.list}
+                  key={club.id}
+                  href={`/team/${formatTeamName(club.shortName)}/${formatTeamName(club.runningCompetitions[0].code)}`}
+                >
+                  <img src={club.crest} alt={club.name} />
+                  {club.name}
+                </Link>
+              ))}
+          </>
         ) : (
           <div className={classes.noMatches}>No matches found.</div>
         )}

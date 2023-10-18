@@ -34,7 +34,6 @@ const Tournament = () => {
           throw new Error('API request failed');
         }
         const data = await response.json();
-        console.log("data " + data);
         setLeague(data);
         setIsLoading(false);
       } catch (error) {
