@@ -6,6 +6,7 @@ import Table from '@/components/leagues/Table';
 import LeagueTable from '@/components/leagues/LeagueTable';
 import { useRouter } from 'next/router';
 import classes from './Tournament.module.css';
+import TopScorersTable from '@/components/leagues/TopScorersTable';
 
 const Tournament = () => {
   const [activeTable, setActiveTable] = useState('table');
@@ -44,57 +45,73 @@ const Tournament = () => {
     fetchLeague();
   }, []);
 
-  const handleFixturesClick = () => {
+  const fixturesClickHandler = () => {
     setActiveTable('table');
   };
 
-  const handleTableClick = () => {
+  const tableClickHandler = () => {
     setActiveTable('leagueTable');
   };
 
- if(!league) {
-  return <h1>Emin</h1>
- }
- 
+  const scorersClickHandler = () => {
+    setActiveTable('leagueScorers');
+  };
+
   return (
     <Fragment>
-      <div className={classes.leagueTitle}>
-        <h2>Welcome to {formatName(leaguetitle)}!</h2>
-        <div className={classes.leagueContainer}>
-          <div className={classes.buttonContainer}>
-            <button onClick={handleFixturesClick} className={activeTable === 'table' ? classes.active : ''}>
-              Fixture
-            </button>
-            <button onClick={handleTableClick} className={activeTable === 'leagueTable' ? classes.active : ''}>
-              Table
-            </button>
-          </div>
-          {activeTable === 'table' ? (
-            <Table
-              key={league.id}
-              id={league.id}
-              name={league.name}
-              title={league.area.name}
-              code={league.code}
-              image={league.area.flag}
-            />
-          ) : (
-            <LeagueTable
-              key={league.id}
-              id={league.id}
-              name={league.name}
-              title={league.area.name}
-              code={league.code}
-              image={league.area.flag}
-            />
-          )}
-          <Link href='/'>
+      {league ? (
+        <div className={classes.leagueTitle}>
+          <h2>Welcome to {formatName(leaguetitle)}!</h2>
+          <div className={classes.leagueContainer}>
             <div className={classes.buttonContainer}>
-              <button>Homepage</button>
+              <button onClick={fixturesClickHandler} className={activeTable === 'table' ? classes.active : ''}>
+                Fixture
+              </button>
+              <button onClick={tableClickHandler} className={activeTable === 'leagueTable' ? classes.active : ''}>
+                Table
+              </button>
+              <button onClick={scorersClickHandler} className={activeTable === 'leagueScorers' ? classes.active : ''}>
+                Top Scorers
+              </button>
             </div>
-          </Link>
+            {activeTable === 'table' ? (
+              <Table
+                key={league.id}
+                id={league.id}
+                name={league.name}
+                title={league.area.name}
+                code={league.code}
+                image={league.area.flag}
+              />
+            ) : activeTable === 'leagueTable' ? (
+              <LeagueTable
+                key={league.id}
+                id={league.id}
+                name={league.name}
+                title={league.area.name}
+                code={league.code}
+                image={league.area.flag}
+              />
+            ) : (
+              <TopScorersTable
+                key={league.id}
+                id={league.id}
+                name={league.name}
+                title={league.area.name}
+                code={league.code}
+                image={league.area.flag}
+              />
+            )}
+            <Link href='/'>
+              <div className={classes.buttonContainer}>
+                <button>Homepage</button>
+              </div>
+            </Link>
+          </div>
         </div>
-      </div>
+      ) : (
+        <h1 className={classes.h1}>Maximum limit of API calls is reached!</h1>
+      )}
     </Fragment>
   );
 };
