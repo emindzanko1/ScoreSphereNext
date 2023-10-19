@@ -46,10 +46,8 @@ const LeagueTable = props => {
     setHoveredRow(null);
   };
 
-  const teamNameClickHandler = (teamName, event) => {
-    event.stopPropagation();
-    const formattedTeamName = teamName.toLowerCase().replace(/\s+/g, '-');
-    <Link href={`/team/${formattedTeamName}`} />;
+  const formatTeamName = teamName => {
+    return teamName.toLowerCase().replace(/\s+/g, '-');
   };
 
   return (
@@ -68,25 +66,20 @@ const LeagueTable = props => {
         <table className={classes.table}>
           <thead className={classes.th}>
             <tr>
-              <th>#</th>
-              <th>Team</th>
-              <th>P</th>
-              <th>W</th>
-              <th>D</th>
-              <th>L</th>
-              <th>Goals</th>
-              <th>PTS</th>
+              <th className={classes.th}>#</th>
+              <th className={classes.th}>Team</th>
+              <th className={classes.th}>P</th>
+              <th className={classes.th}>W</th>
+              <th className={classes.th}>D</th>
+              <th className={classes.th}>L</th>
+              <th className={classes.th}>Goals</th>
+              <th className={classes.th}>PTS</th>
             </tr>
           </thead>
           <tbody>
             {table.map((entry, index) => (
-              <tr
-                key={index}
-                onMouseEnter={() => onMouseRowEnterHandler(index)}
-                onMouseLeave={onMouseRowLeaveHandler}
-                onClick={e => teamNameClickHandler(entry.team.name, e)}
-              >
-                <td>
+              <tr key={index} onMouseEnter={() => onMouseRowEnterHandler(index)} onMouseLeave={onMouseRowLeaveHandler}>
+                <td className={classes.td}>
                   <span className={classes.position}> {entry.position}</span>
                 </td>
                 <td
@@ -96,18 +89,23 @@ const LeagueTable = props => {
                 >
                   <div className={classes.leagueTeamContainer}>
                     <img src={entry.team.crest} alt={entry.team.crest} />
-                    <span className={classes.leagueTeamName}>{entry.team.name}</span>
+                    <Link
+                      href={`/team/${formatTeamName(entry.team.name)}/${formattedCode}`}
+                      className={classes.leagueTeamName}
+                    >
+                      {entry.team.name}
+                    </Link>
                     {hoveredRow === index && <span className={classes.tooltip}>Click for team details!</span>}
                   </div>
                 </td>
-                <td>{entry.playedGames}</td>
-                <td>{entry.won}</td>
-                <td>{entry.draw}</td>
-                <td>{entry.lost}</td>
-                <td>
+                <td className={classes.td}>{entry.playedGames}</td>
+                <td className={classes.td}>{entry.won}</td>
+                <td className={classes.td}>{entry.draw}</td>
+                <td className={classes.td}>{entry.lost}</td>
+                <td className={classes.td}>
                   {entry.goalsFor}:{entry.goalsAgainst}
                 </td>
-                <td>{entry.points}</td>
+                <td className={classes.td}>{entry.points}</td>
               </tr>
             ))}
           </tbody>

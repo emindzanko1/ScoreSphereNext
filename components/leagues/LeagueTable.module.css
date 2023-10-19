@@ -37,6 +37,10 @@
   font-weight: bold;
 }
 
+.table tr {
+  border-bottom: 1px solid #ccc;
+}
+
 .table tr:hover {
   background-color: #f2f2f2;
   cursor: pointer;

@@ -25,6 +25,7 @@ const Clubs = () => {
 
         const data = await response.json();
         const teams = data.teams;
+        console.log(teams);
         const clubsWithLowercaseShortNames = teams.map(club => ({
           ...club,
           shortName: club.shortName.toLowerCase().replace(/\s+/g, '-'),
@@ -41,7 +42,7 @@ const Clubs = () => {
   }, []);
 
   const myClub = clubs.find(club => club.shortName === clubName);
-
+  
   console.log(myClub);
 
   const errorHandler = () => {

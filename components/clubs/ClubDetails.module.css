@@ -1,31 +1,62 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .clubContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 2rem;
-  }
-  
-  .clubName {
-    color: black;
-  }
-  
-  .clubImage {
-    display: block;
-    max-width: 100%;
-    max-height: 100%;
-    width: 150px;
-    height: 150px;
-    margin: 0 auto;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  margin-top: 10px;
+}
+
+.clubName {
+  color: black;
+}
+
+.h1 {
+  margin-top: 10px;
+}
+
+.clubImage {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: 150px;
+  height: 150px;
+  margin: 10px auto;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.buttonContainer button {
+  width: 5rem;
+  height: 2rem;
+  border-radius: 10px;
+  background-color: #c4d4e8;
+  border: none;
+  margin: none;
+}
+
+.buttonContainer button:hover {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+
+.buttonContainer button:not(.active):hover {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+
+.buttonContainer button.active {
+  background-color: #f0f8ff;
+}

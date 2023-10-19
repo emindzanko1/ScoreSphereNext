@@ -10,6 +10,8 @@ const ClubDetails = props => {
 
   const { club } = props;
 
+  console.log(props);
+
   let name, league;
 
   if (club) {
@@ -33,7 +35,7 @@ const ClubDetails = props => {
     <div className={classes.container}>
       {club ? (
         <>
-          <h1>{name}</h1>
+          <h1 className={classes.title}>{name}</h1>
           <div className={classes.clubImageContainer}>
             <img src={club.crest} alt={club.name} className={classes.clubImage} />
           </div>
@@ -74,7 +76,7 @@ const ClubDetails = props => {
           </Link>
         </>
       ) : (
-        <h2>Sacekaj malo</h2>
+        <h1 className={classes.h1}>Maximum limit of API calls is reached!</h1>
       )}
     </div>
   );

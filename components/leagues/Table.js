@@ -23,7 +23,6 @@ const Table = props => {
       try {
         setIsLoading(true);
         const response = await fetch(`http://localhost:5000/league/${formattedCode}/matches`);
-        // const response = await fetch('http://localhost:5000/league/PL/matches');
         if (!response.ok) {
           throw new Error('API request failed');
         }
